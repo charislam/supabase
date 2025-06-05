@@ -62,17 +62,6 @@ jobs:
         uses: reviewdog/action-setup@3f401fe1d58fe77e10d665ab713057375e39b887 # v1.3.0
         with:
           reviewdog_version: v0.20.2
-      - name: run linter (internal)
-        if: steps.filter.outputs.docs == 'true' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          BASE_REF: ${{ github.base_ref }}
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -o pipefail
-          git diff --name-only "origin/$BASE_REF" HEAD \
-            | { grep -E "^apps/docs/content/" || test $? = 1; } \
-            | xargs -r supa-mdx-lint --format rdf \
-            | reviewdog -f=rdjsonl -reporter=github-pr-review -tee
       - id: external_lint
         name: run linter (external)
         env:
