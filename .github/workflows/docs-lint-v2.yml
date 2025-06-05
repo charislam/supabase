@@ -77,8 +77,8 @@ jobs:
           }
           set +e
           LINT_RESULTS=$(run_lints)
-          echo "$LINT_RESULTS"
           LINT_EXIT_CODE=$?
+          echo "$LINT_RESULTS"
           echo "$LINT_EXIT_CODE"
           set -e
           echo "LINT_EXIT_CODE=$LINT_EXIT_CODE" >> $GITHUB_OUTPUT
